@@ -108,7 +108,7 @@ const MapInterface = ({
     setIsPaused(false);
   };
 
-  const stopWalk = () => {
+  const stopWalk = async () => {
     // Save walk data
     const walkData = {
       distance: distance,
@@ -117,14 +117,29 @@ const MapInterface = ({
       calories: calories,
     };
 
-    onWalkComplete(walkData);
+    try {
+      // In a real app, we would save this to Supabase
+      // await saveWalk({
+      //   dog_id: currentDogId, // Would come from context or props
+      //   date: new Date().toISOString(),
+      //   distance: distance,
+      //   duration: walkTime,
+      //   route: "Custom Route",
+      //   calories: Math.round(calories)
+      // });
 
-    // Reset state
-    setIsWalking(false);
-    setIsPaused(false);
-    setWalkTime(0);
-    setDistance(0);
-    setCalories(0);
+      onWalkComplete(walkData);
+
+      // Reset state
+      setIsWalking(false);
+      setIsPaused(false);
+      setWalkTime(0);
+      setDistance(0);
+      setCalories(0);
+    } catch (error) {
+      console.error("Error saving walk:", error);
+      // Would show error message to user
+    }
   };
 
   // Format time as MM:SS
